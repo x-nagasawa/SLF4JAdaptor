@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2013 NagasawaXien
+ * Copyright (c) 2012-2015 NagasawaXien
  *
  * All rights reserved.
  *
@@ -84,6 +84,30 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
         logger.db(level, msg);
     }
 
+    private void _log(DebugLevel level, String msg, Object arg1) {
+        if (logger.wouldLog(level)) {
+            _log(level, MessageFormatter.format(msg, arg1));
+        }
+    }
+
+    private void _log(DebugLevel level, String msg, Object arg1, Object arg2) {
+        if (logger.wouldLog(level)) {
+            _log(level, MessageFormatter.format(msg, arg1, arg2));
+        }
+    }
+
+    private void _log(DebugLevel level, String msg, Object... arg1) {
+        if (logger.wouldLog(level)) {
+            _log(level, MessageFormatter.arrayFormat(msg, arg1));
+        }
+    }
+
+    private void _log(DebugLevel level, String msg, Throwable arg1) {
+        if (logger.wouldLog(level)) {
+            _log(level, MessageFormatter.format(msg, arg1));
+        }
+    }
+
     private void _log(DebugLevel level, FormattingTuple ft) {
         if (logger.wouldLog(level)) {
             logger.db(level, ft.getMessage());
@@ -102,22 +126,22 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void error(String msg, Object arg1) {
-        _log(DebugLevel.L2_ERROR, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L2_ERROR, msg, arg1);
     }
 
     @Override
     public void error(String msg, Object arg1, Object arg2) {
-        _log(DebugLevel.L2_ERROR, MessageFormatter.format(msg, arg1, arg2));
+        _log(DebugLevel.L2_ERROR, msg, arg1, arg2);
     }
 
     @Override
     public void error(String msg, Object... arg1) {
-        _log(DebugLevel.L2_ERROR, MessageFormatter.arrayFormat(msg, arg1));
+        _log(DebugLevel.L2_ERROR, msg, arg1);
     }
 
     @Override
     public void error(String msg, Throwable arg1) {
-        _log(DebugLevel.L2_ERROR, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L2_ERROR, msg, arg1);
     }
 
     // WARN
@@ -128,22 +152,22 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void warn(String msg, Object arg1) {
-        _log(DebugLevel.L3_WARN, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L3_WARN, msg, arg1);
     }
 
     @Override
     public void warn(String msg, Object arg1, Object arg2) {
-        _log(DebugLevel.L3_WARN, MessageFormatter.format(msg, arg1, arg2));
+        _log(DebugLevel.L3_WARN, msg, arg1, arg2);
     }
 
     @Override
     public void warn(String msg, Object... arg1) {
-        _log(DebugLevel.L3_WARN, MessageFormatter.arrayFormat(msg, arg1));
+        _log(DebugLevel.L3_WARN, msg, arg1);
     }
 
     @Override
     public void warn(String msg, Throwable arg1) {
-        _log(DebugLevel.L3_WARN, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L3_WARN, msg, arg1);
     }
 
     // INFO
@@ -155,22 +179,22 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void info(String msg, Object arg1) {
-        _log(DebugLevel.L4_INFO, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L4_INFO, msg, arg1);
     }
 
     @Override
     public void info(String msg, Object arg1, Object arg2) {
-        _log(DebugLevel.L4_INFO, MessageFormatter.format(msg, arg1, arg2));
+        _log(DebugLevel.L4_INFO, msg, arg1, arg2);
     }
 
     @Override
     public void info(String msg, Object... arg1) {
-        _log(DebugLevel.L4_INFO, MessageFormatter.arrayFormat(msg, arg1));
+        _log(DebugLevel.L4_INFO, msg, arg1);
     }
 
     @Override
     public void info(String msg, Throwable arg1) {
-        _log(DebugLevel.L4_INFO, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L4_INFO, msg, arg1);
     }
 
     // DEBUG
@@ -182,22 +206,22 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void debug(String msg, Object arg1) {
-        _log(DebugLevel.L5_DEBUG, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L5_DEBUG, msg, arg1);
     }
 
     @Override
     public void debug(String msg, Object arg1, Object arg2) {
-        _log(DebugLevel.L5_DEBUG, MessageFormatter.format(msg, arg1, arg2));
+        _log(DebugLevel.L5_DEBUG, msg, arg1, arg2);
     }
 
     @Override
     public void debug(String msg, Object... arg1) {
-        _log(DebugLevel.L5_DEBUG, MessageFormatter.arrayFormat(msg, arg1));
+        _log(DebugLevel.L5_DEBUG, msg, arg1);
     }
 
     @Override
     public void debug(String msg, Throwable arg1) {
-        _log(DebugLevel.L5_DEBUG, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L5_DEBUG, msg, arg1);
     }
 
     // TRACE
@@ -209,21 +233,21 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
 
     @Override
     public void trace(String msg, Object arg1) {
-        _log(DebugLevel.L6_VERBOSE, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L6_VERBOSE, msg, arg1);
     }
 
     @Override
     public void trace(String msg, Object arg1, Object arg2) {
-        _log(DebugLevel.L6_VERBOSE, MessageFormatter.format(msg, arg1, arg2));
+        _log(DebugLevel.L6_VERBOSE, msg, arg1, arg2);
     }
 
     @Override
     public void trace(String msg, Object... arg1) {
-        _log(DebugLevel.L6_VERBOSE, MessageFormatter.arrayFormat(msg, arg1));
+        _log(DebugLevel.L6_VERBOSE, msg, arg1);
     }
 
     @Override
     public void trace(String msg, Throwable arg1) {
-        _log(DebugLevel.L6_VERBOSE, MessageFormatter.format(msg, arg1));
+        _log(DebugLevel.L6_VERBOSE, msg, arg1);
     }
 }
