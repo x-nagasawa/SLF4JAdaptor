@@ -78,7 +78,7 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
     }
 
     private void _log(DebugLevel level, String msg) {
-        if (!logger.wouldLog(level) || msg == null || msg.isEmpty())
+        if (!logger.wouldLog(level) || msg == null)
             return;
 
         logger.db(level, msg);
@@ -86,35 +86,42 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
 
     private void _log(DebugLevel level, String msg, Object arg1) {
         if (logger.wouldLog(level)) {
-            _log(level, MessageFormatter.format(msg, arg1));
+            __log(level, MessageFormatter.format(msg, arg1));
         }
     }
 
     private void _log(DebugLevel level, String msg, Object arg1, Object arg2) {
         if (logger.wouldLog(level)) {
-            _log(level, MessageFormatter.format(msg, arg1, arg2));
+            __log(level, MessageFormatter.format(msg, arg1, arg2));
         }
     }
 
     private void _log(DebugLevel level, String msg, Object... arg1) {
         if (logger.wouldLog(level)) {
-            _log(level, MessageFormatter.arrayFormat(msg, arg1));
+            __log(level, MessageFormatter.arrayFormat(msg, arg1));
         }
     }
 
     private void _log(DebugLevel level, String msg, Throwable arg1) {
         if (logger.wouldLog(level)) {
-            _log(level, MessageFormatter.format(msg, arg1));
+            __log(level, MessageFormatter.format(msg, arg1));
         }
     }
 
-    private void _log(DebugLevel level, FormattingTuple ft) {
-        if (logger.wouldLog(level)) {
-            logger.db(level, ft.getMessage());
-            Throwable t = ft.getThrowable();
-            if (t != null) {
-                logger.dbe(level, t);
+    private void __log(DebugLevel level, FormattingTuple ft) {
+        String msg = ft.getMessage();
+        Throwable t = ft.getThrowable();
+
+        if (msg != null && !msg.isEmpty()) {
+            logger.db(level, msg);
+        }
+        if (t == null) {
+            if (msg != null && msg.isEmpty()) {
+                // msg == "" && t == null の場合は出力する
+                logger.db(level, msg);
             }
+        } else {
+            logger.dbe(level, t);
         }
     }
 
