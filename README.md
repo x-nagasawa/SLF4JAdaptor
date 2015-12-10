@@ -12,7 +12,7 @@ for Gradle
 
 * SLF4J adaptor for org.grlea.log.SimpleLogger 2.0.1
 
-       dependencies {
-           runtime 'com.github.x-nagasawa:slf4j-grlea-simplelogger:1.7.7-6'
-       }
+        dependencies {
+            runtime 'com.github.x-nagasawa:slf4j-grlea-simplelogger:1.7.7-6'
+        }
 
