@@ -78,10 +78,9 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
     }
 
     private void _log(DebugLevel level, String msg) {
-        if (!logger.wouldLog(level) || msg == null)
-            return;
-
-        logger.db(level, msg);
+        if (logger.wouldLog(level)) {
+            logger.db(level, msg);
+        }
     }
 
     private void _log(DebugLevel level, String msg, Object arg1) {
@@ -112,15 +111,14 @@ public final class SimpleLoggerAdapter extends MarkerIgnoringBase {
         String msg = ft.getMessage();
         Throwable t = ft.getThrowable();
 
-        if (msg != null && !msg.isEmpty()) {
-            logger.db(level, msg);
-        }
         if (t == null) {
-            if (msg != null && msg.isEmpty()) {
-                // msg == "" && t == null の場合は出力する
+            // If logger arg has no Throwable, logger output msg anyway
+            logger.db(level, msg);
+        } else {
+            // If logger arg has Throwable, output only throwable if msg is null or empty
+            if (msg != null && !msg.isEmpty()) {
                 logger.db(level, msg);
             }
-        } else {
             logger.dbe(level, t);
         }
     }
